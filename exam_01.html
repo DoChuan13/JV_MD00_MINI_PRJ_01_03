@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập 1</title>
+</head>
+
+<body>
+    <button type="button" onclick="reveseString()">Ex01: Click to Start</button>
+</body>
+<script>
+    function reveseString() {
+        let str = prompt("Nhập vào một chuỗi bất kỳ:");
+        let strArr = str.split('');
+        for (let i = 0, j = strArr.length - 1; i < j; i++, j--) {
+            let temp = strArr[i];
+            strArr[i] = strArr[j];
+            strArr[j] = temp;
+        }
+        document.write("Chuỗi ký tự ban đầu là: " + str);
+        document.write("<br>Chuỗi ký tự sau khi đảo ngược là: " + strArr.join(''))
+    }
+</script>
+
+</html>

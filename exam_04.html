@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập 4</title>
+</head>
+
+<body>
+    <button type="button" onclick="sortIncreaseArr()">Ex04: Click to Start</button>
+</body>
+<script>
+    function sortIncreaseArr() {
+        let len = prompt("Nhập độ dài của mảng dữ liệu");
+        let arr = [];
+        for (let i = 0; i < len; i++) {
+            arr[i] = parseInt(prompt("Nhập giá trị số của phần tử thứ (start from 1): " + (i + 1)));
+        }
+        document.write("Mảng ban đầu nhập vào là: " + arr);
+
+        for (let i = 0; i < arr.length; i++) {
+            for (j = i + 1; j < arr.length; j++) {
+                if (arr[i] > arr[j]) {
+                    let temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp
+                }
+            }
+        }
+        document.write("<br>Mảng sau khi sắp xếp tăng dần là: " + arr);
+    }
+</script>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập 3</title>
+</head>
+
+<body>
+    <button type="button" onclick="deleteDoubleItem()">Ex03: Click to Start</button>
+</body>
+<script>
+    function deleteDoubleItem() {
+        let len = prompt("Nhập độ dài của mảng dữ liệu");
+        let arr = [];
+        for (let i = 0; i < len; i++) {
+            arr[i] = prompt("Nhập giá trị phần tử thứ (start from 1): " + (i + 1));
+        }
+        document.write("Mảng ban đầu nhập vào là: " + arr);
+        for (let i = 0; i < arr.length; i++) {
+            for (let j = arr.length - 1; j > i; j--) {
+                if (arr[i] == arr[j]) {
+                    arr.splice(j, 1)
+                }
+            }
+        }
+        document.write("<br>Mảng sau khi xóa trùng lặp là là: " + arr);
+    }
+</script>
+
+</html>

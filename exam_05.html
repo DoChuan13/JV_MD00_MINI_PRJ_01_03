@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập 5</title>
+</head>
+<style>
+    #container {
+        margin: 0 auto;
+        width: 50%;
+        text-align: center;
+        background-color: antiquewhite;
+    }
+
+    table {
+        margin: 0 auto;
+        border-collapse: collapse;
+        /* border: 1px solid black; */
+    }
+
+    table tr {
+        border: 1px solid black;
+    }
+
+    tr:nth-child(odd) {
+        background-color: aquamarine;
+    }
+
+    tr:nth-child(even) {
+        background-color: antiquewhite;
+    }
+
+    table th {
+        width: 200px;
+        background-color: gray;
+        color: white;
+    }
+</style>
+
+<body>
+    <div id="container">
+        <div>
+            <input type="text" name="" id="input">
+            <button type="button" onclick="addNewStaff()">Add</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>FULL NAME</th>
+                    <th colspan="2">ACTION</th>
+                </tr>
+            </thead>
+            <tbody id="table_data">
+            </tbody>
+        </table>
+    </div>
+
+
+</body>
+<script>
+    function Staff(id, name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    let listStaffArr = JSON.parse(localStorage.getItem("listStaff"));
+    if (listStaffArr == null) {
+        listStaffArr = [];
+        localStorage.setItem("listStaff", JSON.stringify(listStaffArr));
+    }
+
+    function renderTable(listStaffArr) {
+        let data = '';
+        let result = document.getElementById("table_data")
+        for (let i = 0; i < listStaffArr.length; i++) {
+            data += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td id="input_value_${listStaffArr[i].id}">${listStaffArr[i].name}</td>
+                        <td id="toggle_btn_${listStaffArr[i].id}"><button type="button" onclick="editStaff(${listStaffArr[i].id})">EDIT</button></td>
+                        <td><button type="button" onclick="deleteStaff(${listStaffArr[i].id})">DELETE</button></td>
+                    </tr>
+                `
+        }
+        result.innerHTML = data;
+    }
+
+    renderTable(listStaffArr)
+
+
+    //Add New Staff
+    let input = document.getElementById("input");
+    input.addEventListener('keypress', function (keyValue) {
+        if (keyValue.key == "Enter") {
+            addNewStaff();
+        }
+    })
+
+    function addNewStaff() {
+        let input = document.getElementById("input");
+        if (input.value == null || input.value == "") {
+            alert("Yêu cầu nhập dữ liệu vào trước")
+        }
+        else {
+            let listStaffArr = JSON.parse(localStorage.getItem("listStaff"));
+            let idStaff;
+            if (listStaffArr.length == 0) {
+                idStaff = listStaffArr.length;
+            }
+            else {
+                idStaff = listStaffArr[listStaffArr.length - 1].id + 1;
+            }
+            let newStaff = new Staff(idStaff, input.value)
+            listStaffArr.push(newStaff);
+            localStorage.setItem("listStaff", JSON.stringify(listStaffArr));
+            renderTable(listStaffArr)
+            input.value = '';
+        }
+    }
+
+    //Delete Staff
+    function deleteStaff(index) {
+        let listStaffArr = JSON.parse(localStorage.getItem("listStaff"));
+        let checkconfirm = confirm("Bạn có chắc chắn muốn xóa không?");
+        if (checkconfirm) {
+            for (let i = 0; i < listStaffArr.length; i++) {
+                if (listStaffArr[i].id == index) {
+                    listStaffArr.splice(i, 1);
+                    break
+                }
+            }
+        }
+        localStorage.setItem("listStaff", JSON.stringify(listStaffArr));
+        renderTable(listStaffArr)
+    }
+
+    //Edit Staff
+
+    function editStaff(index) {
+        let listStaffArr = JSON.parse(localStorage.getItem("listStaff"));
+        let locValue = document.getElementById(`input_value_${index}`);
+        let locBtn = document.getElementById(`toggle_btn_${index}`);
+        let position = 0;
+        for (let i = 0; i < listStaffArr.length; i++) {
+            if (listStaffArr[i].id == index) {
+                position = i;
+                break
+            }
+        }
+        locValue.innerHTML = `<input id="input_box_${index}" type="text" value="${listStaffArr[position].name}">`
+        locBtn.innerHTML = `<button type="button" onclick="saveStaff(${index})">SAVE</button>`
+        pressToSave(index)
+    }
+
+    //Save Staff
+    function saveStaff(index) {
+        let listStaffArr = JSON.parse(localStorage.getItem("listStaff"));
+        let locValue = document.getElementById(`input_value_${index}`);
+        let locBtn = document.getElementById(`toggle_btn_${index}`);
+        let position = 0;
+        for (let i = 0; i < listStaffArr.length; i++) {
+            if (listStaffArr[i].id == index) {
+                position = i;
+                break
+            }
+        }
+        let newValue = locValue.childNodes[0].value;
+        locValue.innerHTML = newValue;
+        listStaffArr[position].name = newValue;
+        localStorage.setItem("listStaff", JSON.stringify(listStaffArr));
+        locBtn.innerHTML = `<button type="button" onclick="editStaff(${index})">EDIT</button>`
+    }
+
+    //Enter to Save
+    function pressToSave(index) {
+        let edit_input = document.getElementById(`input_box_${index}`);
+        edit_input.addEventListener('keypress', function (keyValue) {
+            if (keyValue.key == "Enter") {
+                saveStaff(index);
+            }
+        })
+    }
+</script>
+
+</html>
