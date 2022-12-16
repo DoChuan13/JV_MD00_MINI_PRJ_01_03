@@ -9,7 +9,147 @@
 </head>
 
 <body>
-
+    <div id="containter">
+        <div>
+            <label for="date">Date</label>
+            <input type="number" name="Date" id="date" value="01">
+            <label for="date">Month</label>
+            <input type="number" name="Month" id="month" value="01">
+            <label for="date">Year</label>
+            <input type="number" name="Year" id="year" value="1900">
+        </div>
+        <button type="button" onclick="checkFullTime()">Check Date</button>
+        <div>
+            <p id="result">Chưa có thông tin</p>
+            <p id="next_date_result"></p>
+        </div>
+    </div>
 </body>
+<script>
+    function checkleapyear() {
+        let year = document.getElementById("year").value;
+        let checkyear = ((year % 4 == 0) && (year % 100 != 0)) || ((year % 100 == 0) && (year % 400 == 0))
+        console.log(checkyear);
+        return checkyear
+    }
+    function checkFullTime() {
+        let date = parseInt(document.getElementById("date").value);
+        let month = parseInt(document.getElementById("month").value);
+        let year = parseInt(document.getElementById("year").value);
+        let result = document.getElementById("result");
+        let result_next_date = document.getElementById("next_date_result");
+        let next_date, next_month, next_year;
+        if (year == 0) {
+            result.innerHTML = ``
+            result_next_date.innerHTML = ``;
+            alert("Không có năm 0 Công lịch")
+        }
+        else {
+            switch (month) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    if (date >= 1 && date <= 31) {
+                        if (date == 31 && month == 12) {
+                            next_date = 1;
+                            next_month = 1;
+                            next_year = year + 1;
+                        }
+                        else if (date == 31 && month < 12) {
+                            next_date = 1;
+                            next_month = month + 1;
+                            next_year = year;
+                        }
+                        else {
+                            next_date = date + 1;
+                            next_month = month;
+                            next_year = year;
+                        }
+                        result.innerHTML = `Ngày ${date}/${month}/${year} là ngày hợp lệ`
+                        result_next_date.innerHTML = `Ngày tiếp theo là: ${next_date}/${next_month}/${next_year}`
+                    }
+                    else {
+                        result.innerHTML = `Ngày ${date}/${month}/${year} KHÔNG phải là ngày hợp lệ`
+                        result_next_date.innerHTML = ``;
+                    }
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    if (date >= 1 && date <= 30) {
+                        if (date == 30) {
+                            next_date = 1;
+                            next_month = month + 1;
+                            next_year = year;
+                        }
+                        else {
+                            next_date = date + 1;
+                            next_month = month;
+                            next_year = year;
+                        }
+                        result.innerHTML = `Ngày ${date}/${month}/${year} là ngày hợp lệ`
+                        result_next_date.innerHTML = `Ngày tiếp theo là: ${next_date}/${next_month}/${next_year}`
+                    }
+                    else {
+                        result.innerHTML = `Ngày ${date}/${month}/${year} KHÔNG phải là ngày hợp lệ`
+                        result_next_date.innerHTML = ``;
+                    }
+                    break;
+                case 2:
+                    if (checkleapyear()) {
+                        if (date >= 1 && date <= 29) {
+                            if (date == 29) {
+                                next_date = 1;
+                                next_month = month + 1;
+                                next_year = year;
+                            }
+                            else {
+                                next_date = date + 1;
+                                next_month = month;
+                                next_year = year;
+                            }
+                            result.innerHTML = `Ngày ${date}/${month}/${year} là ngày hợp lệ`
+                            result_next_date.innerHTML = `Ngày tiếp theo là: ${next_date}/${next_month}/${next_year}`
+                        }
+                        else {
+                            result.innerHTML = `Ngày ${date}/${month}/${year} KHÔNG phải là ngày hợp lệ`
+                            result_next_date.innerHTML = ``;
+                        }
+                    }
+                    else {
+                        if (date >= 1 && date <= 28) {
+                            if (date == 28) {
+                                next_date = 1;
+                                next_month = month + 1;
+                                next_year = year;
+                            }
+                            else {
+                                next_date = date + 1;
+                                next_month = month;
+                                next_year = year;
+                            }
+                            result.innerHTML = `Ngày ${date}/${month}/${year} là ngày hợp lệ`
+                            result_next_date.innerHTML = `Ngày tiếp theo là: ${next_date}/${next_month}/${next_year}`
+                        }
+                        else {
+                            result.innerHTML = `Ngày ${date}/${month}/${year} KHÔNG phải là ngày hợp lệ`
+                            result_next_date.innerHTML = ``;
+                        }
+                    }
+                    break;
+                default:
+                    alert("Thông tin nhập vào không hợp lệ")
+
+            }
+        }
+
+    }
+
+</script>
 
 </html>
