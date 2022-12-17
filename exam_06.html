@@ -39,10 +39,10 @@
         let result = document.getElementById("result");
         let result_next_date = document.getElementById("next_date_result");
         let next_date, next_month, next_year;
-        if (year == 0) {
-            result.innerHTML = ``
+        if (year <= 0) {
+            result.innerHTML = `Ngày ${date}/${month}/${year} đã vượt ra khỏi phạm vi của Công lịch`
             result_next_date.innerHTML = ``;
-            alert("Không có năm 0 Công lịch")
+            alert("Đã vượt ra khỏi phạm vi của Công lịch")
         }
         else {
             switch (month) {
